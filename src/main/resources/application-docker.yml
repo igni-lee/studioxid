@@ -1,0 +1,85 @@
+spring:
+  application:
+    name: protopie-assignment
+  
+  datasource:
+    writer:
+      jdbcUrl: ${SPRING_DATASOURCE_WRITER_URL:jdbc:postgresql://postgres:5432/protopie_assignment}
+      username: ${DB_USERNAME:postgres}
+      password: ${DB_PASSWORD:password}
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        maximum-pool-size: 10
+        minimum-idle: 5
+        connection-timeout: 20000
+        idle-timeout: 300000
+        max-lifetime: 1200000
+    reader:
+      jdbcUrl: ${SPRING_DATASOURCE_READER_URL:jdbc:postgresql://postgres:5432/protopie_assignment}
+      username: ${DB_USERNAME:postgres}
+      password: ${DB_PASSWORD:password}
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        maximum-pool-size: 5
+        minimum-idle: 2
+        connection-timeout: 20000
+        idle-timeout: 300000
+        max-lifetime: 1200000
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+  
+  # Redis 설정
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+  
+  # RabbitMQ 설정
+  rabbitmq:
+    host: ${RABBITMQ_HOST:rabbitmq}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:admin}
+    password: ${RABBITMQ_PASSWORD:admin123}
+    virtual-host: ${RABBITMQ_VHOST:/}
+
+# JWT 설정
+jwt:
+  secret: ${JWT_SECRET:mySecretKey12345678901234567890123456789012345678901234567890}
+  expiration: ${JWT_EXPIRATION:86400000} # 24시간 (밀리초)
+
+# API 문서 설정
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+
+
+# 로깅 설정
+logging:
+  level:
+    studioxid.protopieassignment: INFO
+    org.springframework.security: DEBUG
+    org.springframework.amqp: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

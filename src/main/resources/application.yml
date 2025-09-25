@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: protopie-assignment
+  
+  datasource:
+    writer:
+      jdbcUrl: jdbc:postgresql://localhost:5432/protopie_assignment
+      username: ${DB_USERNAME:postgres}
+      password: ${DB_PASSWORD:password}
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        maximum-pool-size: 10
+        minimum-idle: 5
+        connection-timeout: 20000
+        idle-timeout: 300000
+        max-lifetime: 1200000
+    reader:
+      jdbcUrl: jdbc:postgresql://localhost:5432/protopie_assignment
+      username: ${DB_USERNAME:postgres}
+      password: ${DB_PASSWORD:password}
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        maximum-pool-size: 5
+        minimum-idle: 2
+        connection-timeout: 20000
+        idle-timeout: 300000
+        max-lifetime: 1200000
+  
+  # Redis 설정
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+  
+  # RabbitMQ 설정
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:admin}
+    password: ${RABBITMQ_PASSWORD:admin123}
+    virtual-host: ${RABBITMQ_VHOST:/}
+
+# JWT 설정
+jwt:
+  secret: ${JWT_SECRET:mySecretKey12345678901234567890123456789012345678901234567890}
+  expiration: ${JWT_EXPIRATION:86400000} # 24시간 (밀리초)
+
+# API 문서 설정
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
