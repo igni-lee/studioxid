@@ -295,15 +295,6 @@ Authorization: Bearer {jwt_token}
 ./scripts/stop.sh
 ```
 
-#### 개발 환경 실행
-```bash
-# 인프라만 실행
-./scripts/start-dev.sh
-
-# 애플리케이션 실행
-./gradlew bootRun
-```
-
 #### 수동 실행
 ```bash
 # 1. PostgreSQL 시작
